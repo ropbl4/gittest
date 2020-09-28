@@ -9,6 +9,9 @@ git stash - "припрятать" изменения...
 git branch и -v - смотреть инфу по веткам, а -v - № актуального коммита.
 git branch develop - создать ветку "develop"
 git checkout develop - перейти на ветку "develop"
+git checkout -b repo_name - создать ветку и перейти на неё
+git branch -m change_name - переименовать текущий репозиторий
+git checkout №коммита - перейти к этому коммиту (пругкуть во времени)
 
 
 --- Отмена ---
