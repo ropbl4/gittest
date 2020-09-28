@@ -5,11 +5,15 @@ git clone - скопировать/скачать себе содержание 
 git add "index.html" или git add . - добавить к commit'у файл такой-то, либо все файлы (если .)
 git commit -m "Комментарий об изменения" - зафиксировать изменения
 git pull - загрузить/скачать изменения с репозитория
-git checkout -- index.html или git checkout . - отменить все изменения в файле index.html или во всех файлах
-Если уже сделал git add index.html, но хочешь отменить, сначала нужно git reset index.html,
-затем git checkout -- index.html
-Если уже сделали и add, и commit - тогда: git reset --hard HEAD^1
-git reset --soft HEAD^1 - отменить изменения, но оставить их в файле. Дальше можно что-то поменять и закоммитить заного,
-либо git reset . - поубирать файлы из очереди на коммит, затем git checkout -- . чтобы совсем отменить.
-
 git stash - "припрятать" изменения...
+
+--- Отмена ---
+git checkout -- index.html или git checkout . - отменить все изменения в файле index.html или во всех файлах
+Если уже сделал git add index.html, но хочешь отменить,
+сначала нужно git reset index.html, затем git checkout -- index.html
+
+Если уже сделали и add, и commit - тогда:
+git reset --hard HEAD~1 (было ^1), git reset --soft HEAD~1  (было ^1) - отменить изменения, но оставить их в файле. Дальше можно что-то поменять и закоммитить заного,
+либо git reset . - поубирать файлы из очереди на коммит, затем git checkout -- . чтобы совсем отменить.
+--------------
+
