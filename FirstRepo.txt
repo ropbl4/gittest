@@ -12,6 +12,8 @@ git checkout develop - перейти на ветку "develop"
 git checkout -b repo_name - создать ветку и перейти на неё
 git branch -m change_name - переименовать текущий репозиторий
 git checkout №коммита - перейти к этому коммиту (пругкуть во времени)
+git push --set-upstream origin develop - чтобы залить новую ветку
+git branch -d branch_name - удалить ветку (только надо находиться не в ней, иначе ошибка)
 
 
 --- Отмена ---
