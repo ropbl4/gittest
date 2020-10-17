@@ -126,6 +126,7 @@ print('id(y) = ', id(y))
 y -= 1
 print('id(y) = ', id(y))
 
+
 print('------ Словари --------')
 
 my_dict = {}
@@ -138,7 +139,7 @@ a = my_dict.get('кот', 'Мурзик')    # найти ключ 'кот', а 
 print(a)
 a = my_dict.get('слон', 'Джумбо')
 print(a)
-my_dict.setdefault('кот', 'Мурзик') # если не найден - добавить ключ "кот" и значение "Мурзик"
+my_dict.setdefault('кот', 'Мурзик')  # если не найден - добавить ключ "кот" и значение "Мурзик"
 print(my_dict)
 
 my_dict = {'один': 'one', 'два': 'two'}
@@ -147,6 +148,9 @@ a = 'один' in my_dict
 print("'один' in my_dict:", a)
 a = 'one' in my_dict
 print("'one' in my_dict:", a)
+
+
+print('------ Множества --------')
 
 my_set = set()
 print(my_set)

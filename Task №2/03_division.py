@@ -11,3 +11,14 @@
 a, b = 179, 37
 
 # TODO здесь ваш код
+result = 0
+temp_a = a
+
+while True:
+    temp_a -= b
+    if temp_a > 0:
+        result += 1
+    else:
+        break
+
+print('Целочисленное деление', a, 'на', b, 'дает', result)
