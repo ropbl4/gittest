@@ -2,4 +2,5 @@
 
 ---
 --- Изменения для ветки "develop"
+--- Тест Pull request на GitHub
 ---
