@@ -17,8 +17,8 @@ for i in range(7):
             point_start = sd.get_point(50 + i*brick_width, 50 + j*brick_height)
             point_end = sd.get_point(150 + i*brick_width, 100 + j*brick_height)
         else:
-            point_start = sd.get_point(50 + i * brick_width + brick_width/2, 50 + j * brick_height)
-            point_end = sd.get_point(150 + i * brick_width + brick_width/2, 100 + j * brick_height)
+            point_start = sd.get_point(50 + i*brick_width + brick_width/2, 50 + j*brick_height)
+            point_end = sd.get_point(150 + i*brick_width + brick_width/2, 100 + j*brick_height)
 
         sd.rectangle(left_bottom=point_start, right_top=point_end, color=sd.COLOR_ORANGE, width=4)
         # sd.line(start_point=point_start, end_point=point_end, color=sd.COLOR_ORANGE, width=4)

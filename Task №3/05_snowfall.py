@@ -21,7 +21,7 @@ sd.resolution = (1600, 1000)
 
 CONST_POWER_OF_GRAVITY = 20
 CONST_MAX_POWER_OF_WIND = 10
-CONST_SLEEP_TIME = 0.001
+CONST_SLEEP_TIME = 0.005
 
 
 def random_snowflake_length(start, end):
@@ -52,9 +52,9 @@ def snowflakes_down(snowflakes_coords):
 
             snowflakes_down_draw(x=x, y=y, length=length, color=sd.background_color)
 
-            y -= CONST_POWER_OF_GRAVITY
-            x = x + power_of_wind(-CONST_MAX_POWER_OF_WIND, CONST_MAX_POWER_OF_WIND)
-            snowflakes_coords[i] = [x, y, length]
+            y -= CONST_POWER_OF_GRAVITY     # снизили высоту снежинки
+            x = x + power_of_wind(-CONST_MAX_POWER_OF_WIND, CONST_MAX_POWER_OF_WIND)    # сдвинули влево/вправо (ветер)
+            snowflakes_coords[i] = [x, y, length]   # записали новые координаты снежинки, чтобы потом "стереть"
 
             snowflakes_down_draw(x=x, y=y, length=length, color=sd.COLOR_WHITE)
 
@@ -74,12 +74,14 @@ rand_length_end = 100
 
 snowflakes_coords = []
 
-for _ in range(2):
+screen_half_L_R = [[0, sd.resolution[0]/2], [sd.resolution[0]/2, sd.resolution[0]]]
+
+for i in range(2):
     for _ in range(N):
         snowflake_length = random_snowflake_length(rand_length_start, rand_length_end)
-        x_start = sd.random_number(snowflake_length, sd.resolution[0] - snowflake_length)
+        x_start = sd.random_number(screen_half_L_R[i][0] + snowflake_length, screen_half_L_R[i][1] - snowflake_length)
 
-        snowflakes_coords.append([x_start, sd.resolution[1]-snowflake_length, snowflake_length])
+        snowflakes_coords.append([x_start, sd.resolution[1]/2-snowflake_length, snowflake_length])
 
     snowflakes_down(snowflakes_coords)
 
