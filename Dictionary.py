@@ -5,6 +5,17 @@ zoo_pet_mass = {
     'horse': 400
 }
 
+d1 = {"Russia": "Moscow", "USA": "Washington"}
+print(d1)
+d1["China"] = "Beijing"
+print(d1)
+# {'Russia': 'Moscow', 'China': 'Beijing', 'USA': 'Washington'}
+
+del d1["China"]
+print(d1)
+# {'Russia': 'Moscow', 'USA': 'Washington'}
+
+
 value_search = 300
 
 key = list(zoo_pet_mass.keys())[list(zoo_pet_mass.values()).index(value_search)]     # Ключ, зная значение
