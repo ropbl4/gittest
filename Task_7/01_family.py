@@ -247,19 +247,25 @@ cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha
 
 class Cat:
 
-    def __init__(self):
-        pass
-
-    def act(self):
-        pass
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 30
 
     def eat(self):
-        pass
+        self.fullness += 20
+
+        cprint(f'{self.name} сегодня ел, теперь сытости: {self.fullness}', color='grey')
 
     def sleep(self):
-        pass
+        self.fullness -= 10
+        cprint(f'{self.name} сегодня спал, Сытости осталось: {self.fullness}', color='grey')
 
     def soil(self):
+        self.fullness -= 10
+        home.dirt += 5
+        cprint(f'{self.name} сегодня драл обои, теперь грязи в доме: {home.dirt}, Сытости осталось: {self.fullness}', color='grey')
+
+    def act(self):
         pass
 
 
