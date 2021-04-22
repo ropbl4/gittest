@@ -299,33 +299,6 @@ class Cat:
                 self.soil()
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-murzik = Cat(name='Мурзик')
-
-serge.enter_the_house(home)
-masha.enter_the_house(home)
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    murzik.act()
-
-    home.dirt += 5
-
-    if home.dirt >= 90:
-        serge.happiness -= 10
-        masha.happiness -= 10
-
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(murzik, color='cyan')
-    cprint(home, color='cyan')
-
-cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Кот съел: {murzik.eated} Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
-
 # ####################################################### Часть вторая бис
 #
 # После реализации первой части надо в ветке мастер продолжить работу над семьей - добавить ребенка
@@ -372,6 +345,7 @@ home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
 kolya = Child(name='Коля')
+murzik = Cat(name='Мурзик')
 
 serge.enter_the_house(home)
 masha.enter_the_house(home)
@@ -382,6 +356,7 @@ for day in range(365):
     serge.act()
     masha.act()
     kolya.act()
+    murzik.act()
 
     home.dirt += 5
 
@@ -392,9 +367,10 @@ for day in range(365):
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
     cprint(kolya, color='cyan')
+    cprint(murzik, color='cyan')
     cprint(home, color='cyan')
 
-cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Ребёнок съел: {kolya.eated}, Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
+cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Ребёнок съел: {kolya.eated}, Кот съел: {murzik.eated}, Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
 
 
 # TODO после реализации второй части - отдать на проверку учителем две ветки
