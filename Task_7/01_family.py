@@ -74,6 +74,10 @@ class Man:  # человек (от него наследуются Husband и Wi
     def eat(self):
         if self.house.food >= 30:
             food_change = 30
+        elif self.house.food <= 0:
+            self.fullness -= 10
+            food_change = 0
+            cprint(f'{self.name} не смог(-ла) поесть, т.к. в доме нет еды ! Осталось сытости: {self.fullness}', color='red')
         else:
             food_change = self.house.food
 
@@ -194,30 +198,6 @@ class Wife(Man):
                 self.clean_house()
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-
-serge.enter_the_house(home)
-masha.enter_the_house(home)
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-
-    home.dirt += 5
-
-    if home.dirt >= 90:
-        serge.happiness -= 10
-        masha.happiness -= 10
-
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(home, color='cyan')
-
-cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
-
 # TODO после реализации первой части - отдать на проверку учителю
 
 # ####################################################### Часть вторая
@@ -274,22 +254,64 @@ class Cat:
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
-class Child:
-
-    def __init__(self):
-        pass
-
-    def __str__(self):
-        return super().__str__()
-
-    def act(self):
-        pass
+class Child(Man):
 
     def eat(self):
-        pass
+        if home.food >= 10:
+            home.food -= 10
+            self.fullness += 10
+            self.eated += 10
+            cprint(f'{self.name} сегодня поел, теперь сытости: {self.fullness}', color='grey')
+        else:
+            self.fullness -= 10
+            cprint(f'{self.name} не смог поесть, т.к. в доме нет еды ! Осталось сытости: {self.fullness}', color='red')
 
     def sleep(self):
-        pass
+        self.fullness -= 10
+        cprint(f'{self.name} сегодня поспал, теперь сытости: {self.fullness}', color='grey')
+
+    def act(self):
+        if self.fullness <= 0:
+            cprint(f'{self.name} умер от голода =(', color='grey', on_color='on_red')
+            return
+
+        if self.fullness <= 30:
+            self.eat()
+        else:
+            rand_num = randint(1, 2)
+            if rand_num == 1:
+                self.eat()
+            if rand_num == 2:
+                self.sleep()
+
+
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
+
+serge.enter_the_house(home)
+masha.enter_the_house(home)
+kolya.enter_the_house(home)
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    serge.act()
+    masha.act()
+    kolya.act()
+
+    home.dirt += 5
+
+    if home.dirt >= 90:
+        serge.happiness -= 10
+        masha.happiness -= 10
+
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
+    cprint(home, color='cyan')
+
+cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Ребёнок съел: {kolya.eated}, Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
 
 
 # TODO после реализации второй части - отдать на проверку учителем две ветки
@@ -301,7 +323,6 @@ class Child:
 # влить в мастер все коммиты из ветки develop и разрешить все конфликты
 # отправить на проверку учителем.
 
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # home = House()
 # serge = Husband(name='Сережа')
 # masha = Wife(name='Маша')
