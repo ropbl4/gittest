@@ -50,9 +50,10 @@ class House:
         self.dirt = 0   # грязь
         self.earn_money = 0     # счётчик заработанных денег за год
         self.bought_coat = 0    # счётчик купленных шуб за год
+        self.food_for_cat = 30
 
     def __str__(self):
-        return f'Дом: Еды: {self.food}, Денег: {self.money}, Грязи: {self.dirt}'
+        return f'Дом: Еды: {self.food}, Еды для кота: {self.food_for_cat}, Денег: {self.money}, Грязи: {self.dirt}'
 
 
 class Man:  # человек (от него наследуются Husband и Wife)
@@ -86,6 +87,10 @@ class Man:  # человек (от него наследуются Husband и Wi
         self.eated += food_change
 
         cprint(f'{self.name} поел(-а), сытость: {self.fullness}, осталось еды: {self.house.food}', color='grey')
+
+    def pet_the_cat(self):  # гладить кота
+        self.happiness += 5
+        cprint(f'{self.name} погладил(-а) кота, теперь счастья: {self.happiness}', color='grey')
 
 
 class Husband(Man):
@@ -122,13 +127,15 @@ class Husband(Man):
         elif self.happiness <= 30:
             self.gaming()
         else:
-            rand_num = randint(1, 3)
+            rand_num = randint(1, 4)
             if rand_num == 1:
                 self.eat()
             if rand_num == 2:
                 self.work()
             if rand_num == 3:
                 self.gaming()
+            if rand_num == 4:
+                self.pet_the_cat()
 
 
 class Wife(Man):
@@ -170,6 +177,19 @@ class Wife(Man):
 
         cprint(f"{self.name} убралась в доме. Теперь грязи: {self.house.dirt}", color="grey")
 
+    def buy_food_for_cat(self):
+        self.fullness -= 10
+
+        if self.house.money >= 50:
+            food_for_cat_count = 50
+        else:
+            food_for_cat_count = self.house.money
+
+        self.house.money -= food_for_cat_count
+        self.house.food_for_cat += food_for_cat_count
+
+        cprint(f'{self.name} купила еду для кота: {food_for_cat_count}, теперь еды для кота: {self.house.food_for_cat}, осталось денег: {self.house.money}',color='grey')
+
     def act(self):
         if self.fullness <= 0:
             cprint(f'{self.name} умерла от голода =(', color='grey', on_color='on_red')
@@ -183,11 +203,16 @@ class Wife(Man):
         elif self.house.food <= 60:
             self.shopping()
         elif self.happiness <= 30:
-            self.buy_fur_coat()
+            if self.house.money >= 350:
+                self.buy_fur_coat()
+            else:
+                self.pet_the_cat()
+        elif self.house.food_for_cat <= 30:
+            self.buy_food_for_cat()
         elif self.house.dirt >= 90:
             self.clean_house()
         else:
-            rand_num = randint(1, 4)
+            rand_num = randint(1, 6)
             if rand_num == 1:
                 self.eat()
             if rand_num == 2:
@@ -196,6 +221,10 @@ class Wife(Man):
                 self.buy_fur_coat()
             if rand_num == 4:
                 self.clean_house()
+            if rand_num == 5:
+                self.pet_the_cat()
+            if rand_num == 6:
+                self.buy_food_for_cat()
 
 
 # TODO после реализации первой части - отдать на проверку учителю
@@ -227,21 +256,75 @@ class Wife(Man):
 
 class Cat:
 
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 30
+        self.eated = 0
 
-    def act(self):
-        pass
+    def __str__(self):
+        return f'Кот: {self.name}, Сытость: {self.fullness}'
 
     def eat(self):
-        pass
+        if home.food_for_cat >= 10:
+            self.fullness += 20
+            home.food_for_cat -= 10
+            self.eated += 10
+            cprint(f'{self.name} сегодня ел, теперь сытости: {self.fullness}', color='grey')
+        else:
+            cprint(f'{self.name} не смог поесть, в доме нет кошачьей еды, теперь сытости: {self.fullness}', color='red')
 
     def sleep(self):
-        pass
+        self.fullness -= 10
+        cprint(f'{self.name} сегодня спал, Сытости осталось: {self.fullness}', color='grey')
 
     def soil(self):
-        pass
+        self.fullness -= 10
+        home.dirt += 5
+        cprint(f'{self.name} сегодня драл обои, теперь грязи в доме: {home.dirt}, Сытости осталось: {self.fullness}', color='grey')
 
+    def act(self):
+        if self.fullness <= 0:
+            cprint(f'{self.name} умер от голода =(', color='grey', on_color='on_red')
+            return
+
+        if self.fullness <= 30:
+            self.eat()
+        else:
+            rand_num = randint(1, 3)
+            if rand_num == 1:
+                self.eat()
+            if rand_num == 2:
+                self.sleep()
+            if rand_num == 3:
+                self.soil()
+
+
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+murzik = Cat(name='Мурзик')
+
+serge.enter_the_house(home)
+masha.enter_the_house(home)
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    serge.act()
+    masha.act()
+    murzik.act()
+
+    home.dirt += 5
+
+    if home.dirt >= 90:
+        serge.happiness -= 10
+        masha.happiness -= 10
+
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(murzik, color='cyan')
+    cprint(home, color='cyan')
+
+cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Кот съел: {murzik.eated} Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
 
 # ####################################################### Часть вторая бис
 #
