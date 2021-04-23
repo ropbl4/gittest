@@ -103,8 +103,8 @@ class Husband(Man):
 
     def work(self):
         self.fullness -= 10
-        self.house.money += 150
-        self.house.earn_money += 150
+        self.house.money += 200
+        self.house.earn_money += 200
         cprint(f'{self.name} сходил на работу, теперь денег в доме: {self.house.money}', color='grey')
 
     def gaming(self):
@@ -180,8 +180,8 @@ class Wife(Man):
     def buy_food_for_cat(self):
         self.fullness -= 10
 
-        if self.house.money >= 50:
-            food_for_cat_count = 50
+        if self.house.money >= 100:
+            food_for_cat_count = 100
         else:
             food_for_cat_count = self.house.money
 
@@ -271,6 +271,7 @@ class Cat:
             self.eated += 10
             cprint(f'{self.name} сегодня ел, теперь сытости: {self.fullness}', color='grey')
         else:
+            self.fullness -= 10
             cprint(f'{self.name} не смог поесть, в доме нет кошачьей еды, теперь сытости: {self.fullness}', color='red')
 
     def sleep(self):
@@ -341,38 +342,6 @@ class Child(Man):
                 self.sleep()
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-kolya = Child(name='Коля')
-murzik = Cat(name='Мурзик')
-
-serge.enter_the_house(home)
-masha.enter_the_house(home)
-kolya.enter_the_house(home)
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    kolya.act()
-    murzik.act()
-
-    home.dirt += 5
-
-    if home.dirt >= 90:
-        serge.happiness -= 10
-        masha.happiness -= 10
-
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(kolya, color='cyan')
-    cprint(murzik, color='cyan')
-    cprint(home, color='cyan')
-
-cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Ребёнок съел: {kolya.eated}, Кот съел: {murzik.eated}, Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
-
-
 # TODO после реализации второй части - отдать на проверку учителем две ветки
 
 
@@ -381,23 +350,6 @@ cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha
 # после подтверждения учителем второй части (обоих веток)
 # влить в мастер все коммиты из ветки develop и разрешить все конфликты
 # отправить на проверку учителем.
-
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
-# kolya = Child(name='Коля')
-# murzik = Cat(name='Мурзик')
-#
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     kolya.act()
-#     murzik.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(kolya, color='cyan')
-#     cprint(murzik, color='cyan')
 
 
 # Усложненное задание (делать по желанию)
@@ -422,3 +374,42 @@ cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha
 #           max_cats = life.experiment(salary)
 #           print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
 
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
+cats = [Cat(name='Мурзик_1')]
+
+serge.enter_the_house(home)
+masha.enter_the_house(home)
+kolya.enter_the_house(home)
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    serge.act()
+    masha.act()
+    kolya.act()
+    for cat in cats:
+        cat.act()
+
+    home.dirt += 5
+
+    if home.dirt >= 90:
+        serge.happiness -= 10
+        masha.happiness -= 10
+
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
+    for cat in cats:
+        cprint(cat, color='cyan')
+    cprint(home, color='cyan')
+
+    if home.food_for_cat >= 100 and len(cats) < 8:
+        cats.append(Cat(name="Мурзик_"+str(len(cats)+1)))
+
+cats_eated = 0
+for cat in cats:
+    cats_eated += cat.eated
+
+cprint(f'\nИтог: Муж съел: {serge.eated}, Жена съела: {masha.eated}, Ребёнок съел: {kolya.eated}, Коты съели: {cats_eated}, Заработано денег: {home.earn_money}, Куплено шуб: {home.bought_coat}', color='green')
