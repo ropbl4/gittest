@@ -166,3 +166,56 @@ a = my_set - other_set  # уникальные значения из множе�
 print(a)
 a = other_set - my_set  # уникальные значения из множества other_set
 print(a)
+
+
+print('------ Работа с файлами --------')
+
+print(ord('h'))     # символ в код
+print(chr(104))     # код в символ
+print(hex(104))     # 16-ричное представление кода
+
+print('\n')
+
+for code in range(128):
+    print(code, hex(code), chr(code))
+
+print('\n')
+
+bb = b'\xd1\x86'
+bn = '\xd1\x86'
+print(bb)
+print(bn)
+
+print('\n')
+
+bb = b'\xd0\xbf\xd1\x80\xd0\xd8\xb2\xd0\xb5\xd1\x82'
+print(bb)
+print(type(bb))
+print(hex(bb[0]))
+print(bb[0])
+print(bb.count(0xd0))
+print(b'he' + b'llo')
+
+# bb[1] = hex(20)     # ошибка: последовательность байт - неизменяемая
+
+print('\n')
+
+print(bin(0xd1))
+print(bin(0x84))
+
+code = 0b10001000100
+print(code, hex(code), chr(code))
+
+print('\n')
+
+ba = bytearray(b'hello')
+ba[0] = 32      # код пробела
+print(ba)
+
+print('\n')
+
+print('привет'.encode(encoding='utf-8'))
+print('привет'.encode(encoding='utf-16'))
+print('привет'.encode(encoding='cp866'))
+
+print(b'\xd0\xbf\xd1\x80\xd0\xb8\xd0\xb2\xd0\xb5\xd1\x82'.decode('utf-8'))
